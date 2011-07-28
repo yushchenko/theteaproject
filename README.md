@@ -1,3 +1,3 @@
 # The Tea Project
 
-See [wiki](wiki) for details.
+See [wiki](theteaproject/wiki) for details.
