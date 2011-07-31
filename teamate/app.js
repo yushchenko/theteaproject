@@ -1,7 +1,8 @@
 // Tea Mate by @vyushchenko, MIT license
 
 var express = require('express'),
-    fs = require('fs');
+    fs = require('fs'),
+    child_process = require('child_process');
 
 var app = module.exports = express.createServer();
 
@@ -30,7 +31,12 @@ var tm = {
     teaList: JSON.parse(fs.readFileSync('teaDB.json')),
     state: 'selecting', // in [selecting, selected, brewing]
     selectedTeaIndex: undefined, // int
-    brewStartedAt: undefined // Date
+    brewStartedAt: undefined, // Date
+    soundHasBeenPlayed: false
+};
+
+tm.playSound = function() {
+    child_process.exec('mplayer sounds/intro.wav');
 };
 
 tm.renderDashboard = function (req, res) {
@@ -41,6 +47,11 @@ tm.renderDashboard = function (req, res) {
         time = Math.round((Date.now() - tm.brewStartedAt)/1000);
     }
 
+    if (tea && Math.abs(time - tea.time) <= 1 && !tm.soundHasBeenPlayed) {
+        tm.playSound();
+        tm.soundHasBeenPlayed = true;
+    }
+
     res.render('dashboard', { layout: false, state: tm.state, tea: tea, time: time });
 };
 
@@ -48,22 +59,31 @@ tm.renderRemote = function (req, res) {
     res.render('remote', { layout: false, state: tm.state, teaList: tm.teaList });
 };
 
+tm.cleanState = function(resetTea) {
+    if (resetTea) {
+        tm.selectedTeaIndex = undefined;
+    }
+    tm.brewStartedAt = undefined;
+    tm.soundHasBeenPlayed = false;
+};
+
 tm.selectTea = function (req, res) {
+    tm.cleanState();
     tm.state = 'selected';
     tm.selectedTeaIndex = parseInt(req.params.index, 10);
-    tm.brewStartedAt = undefined;
 
     res.send('ok');
 };
 
 tm.resetTea = function(req, res) {
+    tm.cleanState(true);
     tm.state = 'selecting';
-    tm.selectedTeaIndex = undefined;
 
     res.send('ok');
 };
 
 tm.startBrew = function (req, res) {
+    tm.cleanState();
     tm.state = 'brewing';
     tm.brewStartedAt = Date.now();
 
@@ -71,9 +91,8 @@ tm.startBrew = function (req, res) {
 };
 
 tm.done = function(req, res) {
+    tm.cleanState();
     tm.state = 'selecting';
-    tm.selectedTeaIndex = undefined;
-    tm.brewStartedAt = undefined;
 
     res.send('ok');
 };

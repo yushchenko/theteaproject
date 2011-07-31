@@ -5,7 +5,9 @@ body {
 
 h1 {
     padding-bottom: 5px; 
-    border-bottom: 1px dotted gray;
+    border-bottom: 1px dotted red;
+    font-weight: normal;
+    color: red;
 }
 
 #name {
