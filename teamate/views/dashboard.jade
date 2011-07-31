@@ -8,4 +8,9 @@ html
 
   body
     h1 The Tea Project
-    div= name
+
+    - if (tea) {
+      div= tea.name
+    - } else {
+      div Select a tea using remote control application.
+    - }

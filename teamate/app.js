@@ -29,22 +29,36 @@ app.configure('production', function(){
 var tm = {
     teaList: JSON.parse(fs.readFileSync('teaDB.json')),
     state: {
-        selectedTeaIndex: undefined,
+        selectedTeaIndex: -1,
         brewStartedAt: undefined
     }
 };
 
 tm.renderDashboard = function (req, res) {
-    res.render('dashboard', { layout: false, name: tm.teaList[0].name });    
+    var tea = tm.teaList[tm.state.selectedTeaIndex]; // tea is undefinded when selectedTeaIndex = -1
+    res.render('dashboard', { layout: false, tea: tea });
 };
 
 tm.renderRemote = function (req, res) {
-  res.render('remote', { layout: false });    
+    res.render('remote', { layout: false,  teaList: tm.teaList });
+};
+
+tm.selectTea = function (req, res) {
+    tm.state.selectedTeaIndex = parseInt(req.params.index, 10);
+    tm.state.brewStartedAt = undefined;
+    res.send('ok');
+};
+
+tm.startBrew = function (req, res) {
+    tm.state.brewStartedAt = Date.now();
+    res.send('ok');
 };
 
 // Routes
 app.get('/', tm.renderDashboard);
 app.get('/remote', tm.renderRemote);
+app.post('/select-tea/:index', tm.selectTea);
+app.post('/start-brew', tm.startBrew);
 
 app.listen(3000);
 
