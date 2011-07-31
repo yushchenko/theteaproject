@@ -1,9 +1,7 @@
+// Tea Mate by @vyushchenko, MIT license
 
-/**
- * Module dependencies.
- */
-
-var express = require('express');
+var express = require('express'),
+    fs = require('fs');
 
 var app = module.exports = express.createServer();
 
@@ -26,15 +24,30 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+//----------------------------------------------------------------------------//
+
+var tm = {
+    teaList: JSON.parse(fs.readFileSync('teaDB.json')),
+    state: {
+        selectedTeaIndex: undefined,
+        brewStartedAt: undefined
+    }
+};
+
+tm.renderDashboard = function (req, res) {
+    res.render('dashboard', { layout: false, name: tm.teaList[0].name });    
+};
+
+tm.renderRemote = function (req, res) {
+  res.render('remote', { layout: false });    
+};
+
 // Routes
-
-app.get('/', function(req, res){
-  res.render('dashboard', { layout: false });
-});
-
-app.get('/remote', function(req, res){
-  res.render('remote', { layout: false });
-});
+app.get('/', tm.renderDashboard);
+app.get('/remote', tm.renderRemote);
 
 app.listen(3000);
-console.log("Express server listening on port %d", app.address().port);
+
+console.log("Tea Mate, port %d.", app.address().port);
+console.log("Restart me, please, when update teaList.json file.");
+console.log("Enjoy your tea and have a nice day :)");
