@@ -6,11 +6,21 @@ html
     script(type='text/javascript', src='/javascripts/remote.js')
     
   body
+    input#state(type='hidden', value=state)
+
     h1 The Tea Project
-    select#tea
-      option Select a tea...
+
+    div#selecting(style='display:none;')
       - for (var i = 0; i < teaList.length; i += 1) {
-        option= teaList[i].name
+        input(id='t'+i, type='radio', name='tea', value=i, onchange='selectTea('+i+');')= teaList[i].name
+        label(for='t'+i)= teaList[i].name
+        br
       - }
-    br
-    input#brew(type='button', value='Start Brew!', disabled)
+
+    div#selected(style='display:none;')
+      input#brew(type='button', value='Start The Brew!')
+      br
+      input#back(type='button', value='Select Another Tea')
+
+    div#brewing(style='display:none;')
+      input#done(type='button', value='Done')

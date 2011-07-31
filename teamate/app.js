@@ -28,37 +28,58 @@ app.configure('production', function(){
 
 var tm = {
     teaList: JSON.parse(fs.readFileSync('teaDB.json')),
-    state: {
-        selectedTeaIndex: -1,
-        brewStartedAt: undefined
-    }
+    state: 'selecting', // in [selecting, selected, brewing]
+    selectedTeaIndex: undefined, // int
+    brewStartedAt: undefined // Date
 };
 
 tm.renderDashboard = function (req, res) {
-    var tea = tm.teaList[tm.state.selectedTeaIndex]; // tea is undefinded when selectedTeaIndex = -1
-    res.render('dashboard', { layout: false, tea: tea });
+    var tea = tm.teaList[tm.selectedTeaIndex]; // tea is undefinded when selectedTeaIndex = undefined
+    res.render('dashboard', { layout: false, state: tm.state, tea: tea });
 };
 
 tm.renderRemote = function (req, res) {
-    res.render('remote', { layout: false,  teaList: tm.teaList });
+    res.render('remote', { layout: false, state: tm.state, teaList: tm.teaList });
 };
 
 tm.selectTea = function (req, res) {
-    tm.state.selectedTeaIndex = parseInt(req.params.index, 10);
-    tm.state.brewStartedAt = undefined;
+    tm.state = 'selected';
+    tm.selectedTeaIndex = parseInt(req.params.index, 10);
+    tm.brewStartedAt = undefined;
+
+    res.send('ok');
+};
+
+tm.resetTea = function(req, res) {
+    tm.state = 'selecting';
+    tm.selectedTeaIndex = undefined;
+
     res.send('ok');
 };
 
 tm.startBrew = function (req, res) {
-    tm.state.brewStartedAt = Date.now();
+    tm.state = 'brewing';
+    tm.brewStartedAt = Date.now();
+
+    res.send('ok');
+};
+
+tm.done = function(req, res) {
+    tm.state = 'selecting';
+    tm.selectedTeaIndex = undefined;
+    tm.brewStartedAt = undefined;
+
     res.send('ok');
 };
 
 // Routes
 app.get('/', tm.renderDashboard);
 app.get('/remote', tm.renderRemote);
-app.post('/select-tea/:index', tm.selectTea);
-app.post('/start-brew', tm.startBrew);
+
+app.post('/selecting-selected/:index', tm.selectTea);
+app.post('/selected-selecting', tm.resetTea);
+app.post('/selected-brewing', tm.startBrew);
+app.post('/brewing-selecting', tm.done);
 
 app.listen(3000);
 
