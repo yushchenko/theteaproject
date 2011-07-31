@@ -34,8 +34,14 @@ var tm = {
 };
 
 tm.renderDashboard = function (req, res) {
-    var tea = tm.teaList[tm.selectedTeaIndex]; // tea is undefinded when selectedTeaIndex = undefined
-    res.render('dashboard', { layout: false, state: tm.state, tea: tea });
+    var tea = tm.teaList[tm.selectedTeaIndex], // tea is undefinded when selectedTeaIndex = undefined
+        time;
+
+    if (tea && tm.brewStartedAt) {
+        time = Math.round((Date.now() - tm.brewStartedAt)/1000);
+    }
+
+    res.render('dashboard', { layout: false, state: tm.state, tea: tea, time: time });
 };
 
 tm.renderRemote = function (req, res) {

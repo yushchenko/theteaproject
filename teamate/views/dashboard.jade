@@ -1,16 +1,34 @@
 !!!
 html
   head
-    title The Tea Project Dashboard
+    title Dashboard - The Tea Project
     link(rel='stylesheet', href='/stylesheets/dashboard.css')
     script(type='text/javascript')
-      setTimeout(function() { window.location.reload(); }, 300);
+      setTimeout(function() { window.location.reload(); }, 200);
 
   body
     h1 The Tea Project
 
     - if (tea) {
-      div= tea.name
+      - if (time && time < tea.time) {
+        div.status
+          div.msg Brewing, wait for
+          - var diff = tea.time - time;
+          div.time= diff < 60 ? diff + ' sec' : Math.round(diff/60) + ' min'
+          div.msg please
+      - } else if (time && time >= tea.time) {
+        div.status
+          div.msg Tea is ready
+          div.time= Math.round((time - tea.time)/60) + ' min'
+          div.msg ago
+      - } else {
+        div.status
+          div#temperature= tea.temperature + ' C'
+      - }
+        
+      div#name= tea.name
+      div#info= tea.type + ' tea from ' + tea.origin
+      div#description= tea.description
     - } else {
-      div Select a tea using remote control application.
+      div#select Select your tea, please.
     - }

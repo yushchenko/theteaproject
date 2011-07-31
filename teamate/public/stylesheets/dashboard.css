@@ -1,7 +1,49 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0 5px 0 5px;
 }
 
-a {
-  color: #00B7FF;
+h1 {
+    padding-bottom: 5px; 
+    border-bottom: 1px dotted gray;
+}
+
+#name {
+  font-size: 6em;
+  margin-bottom: 10px;
+}
+
+#info {
+  font-size: 3.71em;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+#description {
+  font-size: 2.29em;
+  color: #777;
+}
+
+.status {
+  float: right;
+  width: 280px;
+  text-align: center;
+}
+
+#temperature {
+  font-size: 7em;
+  color: red;
+}
+
+#select {
+  font-size: 3em;
+}
+
+.status .msg {
+  font-size: 2em;
+}
+
+.status .time {
+  font-size: 4em;
+  color: red;
 }
