@@ -29,9 +29,11 @@ app.configure('production', function(){
 // Routes
 
 app.get('/', function(req, res){
-  res.render('index', {
-    title: 'Express'
-  });
+  res.render('dashboard', { layout: false });
+});
+
+app.get('/remote', function(req, res){
+  res.render('remote', { layout: false });
 });
 
 app.listen(3000);
