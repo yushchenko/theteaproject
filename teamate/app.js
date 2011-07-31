@@ -63,5 +63,5 @@ app.post('/start-brew', tm.startBrew);
 app.listen(3000);
 
 console.log("Tea Mate, port %d.", app.address().port);
-console.log("Restart me, please, when update teaList.json file.");
+console.log("Restart me, please, when update teaDB.json file.");
 console.log("Enjoy your tea and have a nice day :)");

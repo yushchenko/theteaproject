@@ -7,11 +7,10 @@ html
     
   body
     h1 The Tea Project
-    form#remote(method='post')
-      select#tea
-        option Select a tea...
-        - for (var i = 0; i < teaList.length; i += 1) {
-          option= teaList[i].name
-        - }
-      br
-      input#brew(type='button', value='Start Brew!', disabled)
+    select#tea
+      option Select a tea...
+      - for (var i = 0; i < teaList.length; i += 1) {
+        option= teaList[i].name
+      - }
+    br
+    input#brew(type='button', value='Start Brew!', disabled)
