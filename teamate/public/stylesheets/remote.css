@@ -1,3 +1,30 @@
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font-size: 3em;
+    padding: 20px;
+}
+
+h3 {
+   color: red;
+   border-bottom: 1px dotted red;
+   margin: 0 0 20px 0;
+   font-weight: normal;
+}
+
+input {
+    padding: 12px 15px 12px 15px;
+    margin-bottom: 30px;
+}
+
+#brew {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+#done {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#back {
+    color: #444;
 }

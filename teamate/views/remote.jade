@@ -8,20 +8,18 @@ html
   body
     input#state(type='hidden', value=state)
 
-    h1 The Tea Project
+    h3 The Tea Project
 
     div#selecting(style='display:none;')
       - for (var i = 0; i < teaList.length; i += 1) {
-        input(id='t'+i, type='radio', name='tea', value=i, onchange='selectTea('+i+');')= teaList[i].name
-        label(for='t'+i)= teaList[i].name
+        input.tea(type='button', value='&nbsp;' + teaList[i].name + '&nbsp;', onclick='selectTea('+i+');')
         br
       - }
 
     div#selected(style='display:none;')
-      input#brew(type='button', value='Start The Brew!')
+      input#brew.big(type='button', value='&nbsp;Start The Brew!&nbsp;')
       br
-      br
-      input#back(type='button', value='Select Another Tea')
+      input#back(type='button', value='&nbsp;< Select Another Tea&nbsp;')
 
     div#brewing(style='display:none;')
-      input#done(type='button', value='Done, Next Tea, Please')
+      input#done(type='button', value='&nbsp;Done, Select Another Tea&nbsp;')

@@ -4,7 +4,7 @@
         "type": "Green",
         "origin": "China",
         "temperature": 70,
-        "time": 120,
+        "time": 20,
         "imageURL": "/images/gunpowder_temple_of_heaven.jpg",
         "description": "Rolled leaves explode into a refreshing green-yellow brew."
     },
@@ -16,5 +16,15 @@
         "time": 240,
         "imageURL": "/images/assam_dimakusi.jpg",
         "description": "A dark, malty, strong broken leaf tea."
+    },
+    {
+        "name": "Silver Needles Jun Shan",
+        "type": "White",
+        "origin": "China",
+        "temperature": 70,
+        "time": 120,
+        "imageURL": "/images/silver_needles_zun_cha.jpg",
+        "description": "This very rare tea is the result of two days picking each year. This is the finest quality, most delicate tea on the planet. You are in the company of past emperors while you enjoy this tea."
     }
+
 ]

@@ -91,7 +91,7 @@ tm.startBrew = function (req, res) {
 };
 
 tm.done = function(req, res) {
-    tm.cleanState();
+    tm.cleanState(true);
     tm.state = 'selecting';
 
     res.send('ok');
