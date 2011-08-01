@@ -18,6 +18,15 @@
         "description": "A dark, malty, strong broken leaf tea."
     },
     {
+        "name": "Dilmah Large Leaf Green Tea",
+        "type": "Green",
+        "origin": "China",
+        "temperature": 75,
+        "time": 120,
+        "imageURL": "",
+        "description": "Not particulary fancy but nice tea"
+    },
+    {
         "name": "Silver Needles Jun Shan",
         "type": "White",
         "origin": "China",
