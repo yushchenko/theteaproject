@@ -14,7 +14,7 @@ html
         div.status
           div.msg Brewing, wait for
           - var diff = tea.time - time;
-          div.time= diff < 60 ? diff + ' sec' : Math.round(diff/60) + ' min'
+          div.time= diff < 60 ? diff + ' sec' : Math.ceil(diff/60) + ' min'
           div.msg please
       - } else if (time && time >= tea.time) {
         div.status
